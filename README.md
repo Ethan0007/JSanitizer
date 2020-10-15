@@ -48,7 +48,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
         {
          DefaultMaskValue = "####-####",
          Sensitivity = new List<string>() { "password" }}),
-         };
+        };
 
         return Ok(data);
     }
