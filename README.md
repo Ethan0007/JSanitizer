@@ -28,10 +28,10 @@ Configurable sanitizer for XML and JSON string value through extension method.
    {
        Data data = new Data()
        {
-         JsonArrayResult = "[{\"password\":\"password@412\", \"data\": \"sample\" }]".SanitizeJsonValue(),
-         Name = "{\"name\":\"John\", \"age\":30, \"password\":\"password@123\" } ]}".SanitizeJsonValue(),
-         XMLResult = _xmlValue.SanitizeXmlValue()
-        };
+        JsonArrayResult = "[{\"password\":\"password@412\", \"data\": \"sample\" }]".SanitizeJsonValue(),
+        Name = "{\"name\":\"John\", \"age\":30, \"password\":\"password@123\" } ]}".SanitizeJsonValue(),
+        XMLResult = _xmlValue.SanitizeXmlValue()
+       };
 
         return Ok(data);
      }
