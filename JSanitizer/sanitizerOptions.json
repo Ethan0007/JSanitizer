@@ -1,0 +1,24 @@
+{
+  "DefaultMaskValue": "####-####",
+  "ConfigurationValue": [
+    {
+      "id": 1,
+      "XmlMask": {
+        "MaskValue": "###-###-###",
+        "Sensitivity": [
+          "Password",
+          "password",
+          "PASSWROD"
+        ]
+      },
+      "JsonMask": {
+        "MaskValue": "###-###-###",
+        "Sensitivity": [
+          "Password",
+          "password",
+          "PASSWROD"
+        ]
+      }
+    }
+  ]
+}

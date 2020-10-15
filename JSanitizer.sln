@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSanitizer", "JSanitizer\JSanitizer.csproj", "{F23AF7E0-6554-4229-B528-D010A6A321BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSanitizer.Tests", "JSanitizer.Tests\JSanitizer.Tests.csproj", "{AEA41AFB-E984-4073-B526-D185CC57F52C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F23AF7E0-6554-4229-B528-D010A6A321BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F23AF7E0-6554-4229-B528-D010A6A321BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F23AF7E0-6554-4229-B528-D010A6A321BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F23AF7E0-6554-4229-B528-D010A6A321BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEA41AFB-E984-4073-B526-D185CC57F52C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEA41AFB-E984-4073-B526-D185CC57F52C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEA41AFB-E984-4073-B526-D185CC57F52C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEA41AFB-E984-4073-B526-D185CC57F52C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74B9DF13-6AA3-4FED-8C3A-7719F0530B3A}
+	EndGlobalSection
+EndGlobal
