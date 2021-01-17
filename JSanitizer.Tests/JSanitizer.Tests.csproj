@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JSanitizer" Version="1.0.0" />
+    <PackageReference Include="JSanitizer" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JSanitizer\JSanitizer.csproj" />
+    <Content Update="C:\Users\Joever Monceda\.nuget\packages\jsanitizer\1.0.2\contentFiles\any\netcoreapp3.1\JSOptions\SanitizerOptions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace JSanitizer
 
         private static LogConfig GetConfig()
         {
-            string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "sanitizerOptions.json");
+            string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "JSOptions/SanitizerOptions.json");
 
             string jsonValue = File.ReadAllText(filePath);
 
