@@ -18,7 +18,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
 **Extension:**   
 ```.SanitizeJsonValue()```   
 ```.SanitizeXmlValue()```   
-```.SanitizeXmlWithOptions(options)```
+```.SanitizeXmlWithOptions(options)```   
 ```.SanitizeJsonWithOptions(options)```
 
 1. Sanitize without options 
