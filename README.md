@@ -13,7 +13,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
  
 # How to use:  
 * Go to Tools and select Manage Nuget Packages and Search for JSanitizer library   
-```Install-Package JSanitizer -Version 1.0.0```   
+```Install-Package JSanitizer -Version 1.0.2```   
 
 **Extension:**   
 ```.SanitizeJsonValue()```   
