@@ -3,30 +3,43 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Company></Company>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <Version>2.0.1</Version>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
     <Product>JoeverMonceda</Product>
-    <Description>C# Json and XML string value sanitizer</Description>
-    <Copyright>Copyright (c) 2020 by Joever M</Copyright>
+    <Description>C# Json and XML string value masking/sanitizer</Description>
+    <Copyright>Copyright (c) 2020 by Joever Monceda</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <SignAssembly>false</SignAssembly>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>C#</PackageTags>
+    <PackageTags>C#, Masking , Value Replacer , Sanitizer</PackageTags>
     <Authors>Joever M</Authors>
+    <PackageProjectUrl>https://github.com/Ethan0007/JSanitizer/blob/main/README.md</PackageProjectUrl>
+    <PackageIcon>js.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Ethan0007/JSanitizer</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageReleaseNotes>Update default json configurations.</PackageReleaseNotes>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="sanitizerOptions.json" />
+    <None Include="..\js.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="JSOptions\SanitizerOptions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="JS-README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
+
+  
 
 </Project>

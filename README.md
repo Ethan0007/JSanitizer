@@ -13,13 +13,47 @@ Configurable sanitizer for XML and JSON string value through extension method.
  
 # How to use:  
 * Go to Tools and select Manage Nuget Packages and Search for JSanitizer library   
-```Install-Package JSanitizer -Version 1.0.2```   
+```Install-Package JSanitizer -Version 2.0.1```   
 
 **Extension:**   
 ```.SanitizeJsonValue()```   
 ```.SanitizeXmlValue()```   
-```.SanitizeXmlWithOptions(options)```   
-```.SanitizeJsonWithOptions(options)```
+```.SanitizeJsonValue(options)```   
+```.SanitizeXmlValue(options)```
+
+## How to create you custom JSON configurations.
+* Create folder with name **JSOptions** under your project then create json file with name **SanitizerOptions.json** under the said folder as your default configuration and follow the object format below.
+
+##### {Project.Name}/JSOptions/SanitizerOptions.json
+```
+{
+  "DefaultMaskValue": "####-####",
+  "ConfigurationValue": [
+    {
+      "id": 1,
+      "XmlMask": {
+        "MaskValue": "###-###-###",
+        "Sensitivity": [
+          "Password",
+          "password",
+          "PASSWROD"
+        ]
+      },
+      "JsonMask": {
+        "MaskValue": "###-###-###",
+        "Sensitivity": [
+          "Password",
+          "password",
+          "PASSWROD"
+        ]
+      }
+    }
+  ]
+}
+```
+#### note: It will throw an exception if you use the default json or xml extension methods without providing default json configurations.
+*remarks*: You can add more properties under Sensitivity for value masking.
+
 
 1. Sanitize without options 
 ```
@@ -29,7 +63,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
        Data data = new Data()
        {
         JsonArrayResult = "[{\"password\":\"password@412\", \"data\": \"sample\" }]".SanitizeJsonValue(),
-        Name = "{\"name\":\"John\", \"age\":30, \"password\":\"password@123\" } ]}".SanitizeJsonValue(),
+        Name = "{\"name\":\"John\", \"age\":30, \"password\":\"password@123\"}".SanitizeJsonValue(),
         XMLResult = _xmlValue.SanitizeXmlValue()
        };
 
@@ -44,7 +78,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
    {
       Data data = new Data()
        {
-        XMLResult = _xmlValue.SanitizeXmlWithOptions(new Sanitizer.JOptions()
+        XMLResult = _xmlValue.SanitizeXmlValue(new Sanitizer.JOptions()
         {
          DefaultMaskValue = "####-####",
          Sensitivity = new List<string>() { "password" }}),

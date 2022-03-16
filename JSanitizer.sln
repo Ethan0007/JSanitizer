@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSanitizer", "JSanitizer\JSanitizer.csproj", "{F23AF7E0-6554-4229-B528-D010A6A321BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSanitizer", "JSanitizer\JSanitizer.csproj", "{F23AF7E0-6554-4229-B528-D010A6A321BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSanitizer.Tests", "JSanitizer.Tests\JSanitizer.Tests.csproj", "{AEA41AFB-E984-4073-B526-D185CC57F52C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSanitizer.Sample", "JSanitizer.Sample\JSanitizer.Sample.csproj", "{EF6460A3-AD9D-42F4-A412-23BB5DBF87BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{F23AF7E0-6554-4229-B528-D010A6A321BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F23AF7E0-6554-4229-B528-D010A6A321BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F23AF7E0-6554-4229-B528-D010A6A321BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AEA41AFB-E984-4073-B526-D185CC57F52C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AEA41AFB-E984-4073-B526-D185CC57F52C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AEA41AFB-E984-4073-B526-D185CC57F52C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AEA41AFB-E984-4073-B526-D185CC57F52C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF6460A3-AD9D-42F4-A412-23BB5DBF87BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF6460A3-AD9D-42F4-A412-23BB5DBF87BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF6460A3-AD9D-42F4-A412-23BB5DBF87BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF6460A3-AD9D-42F4-A412-23BB5DBF87BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

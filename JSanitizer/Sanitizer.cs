@@ -24,11 +24,18 @@ namespace JSanitizer
 
         private static LogConfig GetConfig()
         {
-            string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "JSOptions/SanitizerOptions.json");
+            try
+            {
+                string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "JSOptions/SanitizerOptions.json");
 
-            string jsonValue = File.ReadAllText(filePath);
+                string jsonValue = File.ReadAllText(filePath);
 
-            return JsonConvert.DeserializeObject<LogConfig>(jsonValue);
+                return JsonConvert.DeserializeObject<LogConfig>(jsonValue);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Unable to find JSOptions/SanitizerOptions.json as a default configuration. Please read README.md under JSOptions folder!", ex);
+            }
         }
 
         public class JOptions
@@ -42,7 +49,7 @@ namespace JSanitizer
             public List<string> Sensitivity { set; get; }
         }
 
-        public static string SanitizeXmlWithOptions(this string target, JOptions options)
+        public static string SanitizeXmlValue(this string target, JOptions options)
         {
 
             if (string.IsNullOrEmpty(target))
@@ -62,7 +69,6 @@ namespace JSanitizer
                     "password"
                 };
             }
-
 
             foreach (string sensitiveItem in options.Sensitivity)
             {
@@ -109,7 +115,7 @@ namespace JSanitizer
         }
 
 
-        public static string SanitizeJsonWithOptions(this string target, JOptions options)
+        public static string SanitizeJsonValue(this string target, JOptions options)
         {
 
             if (string.IsNullOrEmpty(target)) return null;
@@ -135,13 +141,12 @@ namespace JSanitizer
 
         public static string SanitizeJsonValue(this string target)
         {
+            LogConfig logConfig = GetConfig();
 
             if (string.IsNullOrEmpty(target)) return null;
 
             if (!target.IsValidJson())
                 return target;
-
-            LogConfig logConfig = GetConfig();
 
             logConfig.ConfigurationValue.ForEach(extLog =>
             {
@@ -171,7 +176,6 @@ namespace JSanitizer
 
             return propVal;
         }
-
 
         private static void CheckJsonNode(JToken node, Action<JObject> action)
         {
