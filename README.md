@@ -21,7 +21,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
 ```.SanitizeJsonValue(options)```   
 ```.SanitizeXmlValue(options)```
 
-## How to create you custom JSON configurations.
+## How to create your custom JSON configurations.
 * Create folder with name **JSOptions** under your project then create json file with name **SanitizerOptions.json** under the said folder as your default configuration and follow the object format below.
 
 ##### {Project.Name}/JSOptions/SanitizerOptions.json
