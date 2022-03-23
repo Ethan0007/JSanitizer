@@ -77,7 +77,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
 
 1. Sanitize without options 
 ```
-    [HttpGet, Route("GetWithoutOptions")]
+    [HttpGet, Route("GetWithJsonConfiguration")]
     public IActionResult Get()
     {
         string configDir = $"{Directory.GetCurrentDirectory()}\\JSOptions\\SanitizerOptions.json";
@@ -95,7 +95,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
 
 2. Sanitize withoptions 
 ```
-    [HttpGet, Route("GetWithOptions")]
+    [HttpGet, Route("GetWithClassConfigurations")]
     public IActionResult GetWithOptions()
     {
         Data data = new Data()
