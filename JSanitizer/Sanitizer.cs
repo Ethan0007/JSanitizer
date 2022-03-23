@@ -11,13 +11,96 @@ namespace JSanitizer
 {
     public static class Sanitizer
     {
-        private static void XmlValueReplacer(XmlNode node, string sensitivity, string maskVal)
+        private static void XmlValueReplacer(XmlNode node, string sensitivity, string maskVal, XmlMask xm, MaskPosition ps)
         {
             foreach (XmlNode child in node.ChildNodes)
             {
                 if (child.SelectSingleNode(sensitivity) != null)
                 {
-                    child.SelectSingleNode(sensitivity).InnerText = maskVal;
+                    string input = child.SelectSingleNode(sensitivity).InnerText;
+
+                    string copyInput = input;
+
+                    int length = input.Length - ps.Left;
+
+                    bool isMasked = false;
+
+                    if (!xm.IsFullMasking && ps.Left > 0 && length > ps.Left)
+                    {
+                        string masking = string.Empty;
+
+                        for (int i = 0; i < ps.Left; i++) masking += xm.MaskValue;
+
+                        char[] chars = input.ToCharArray();
+
+                        string toBeReplaced = string.Empty;
+
+                        for (int i = length; i < input.Length; i++)
+                        {
+                            toBeReplaced += chars[i].ToString();
+                        }
+
+                        input = input.Replace(toBeReplaced, masking);
+
+                        isMasked = true;
+                    }
+
+                    if (!xm.IsFullMasking && ps.Right > 0 && length > ps.Right)
+                    {
+                        string masking = string.Empty;
+
+                        for (int i = 0; i < ps.Right; i++) masking += xm.MaskValue;
+
+                        char[] chars = input.ToCharArray();
+
+                        string toBeReplaced = string.Empty;
+
+                        for (int i = 0; i < ps.Right; i++)
+                        {
+                            toBeReplaced += input[i].ToString();
+                        }
+
+                        input = input.Replace(toBeReplaced, masking);
+
+                        isMasked = true;
+                    }
+
+                    if (!xm.IsFullMasking && ps.Center > 0 && length > ps.Center)
+                    {
+                        string masking = string.Empty;
+
+                        int nl = length / 2;
+
+                        for (int i = 0; i < ps.Center; i++) masking += xm.MaskValue;
+
+                        char[] chars = input.ToCharArray();
+
+                        string toBeReplaced = string.Empty;
+
+                        int c = 0;
+
+                        for (int i = nl; i < length; i++)
+                        {
+                            if (c < ps.Center)
+                            {
+                                toBeReplaced += input[i].ToString();
+                                c++;
+                            }
+                        }
+
+                        input = input.Replace(toBeReplaced, masking);
+
+                        isMasked = true;
+                    }
+
+                    if (isMasked)
+                    {
+                        child.SelectSingleNode(sensitivity).InnerText = input;
+                    }
+                    else
+                    {
+                        child.SelectSingleNode(sensitivity).InnerText = maskVal;
+                    }
                 }
             }
         }
@@ -34,22 +117,22 @@ namespace JSanitizer
             }
             catch (Exception ex)
             {
-                throw new Exception("Unable to find JSOptions/SanitizerOptions.json as a default configuration. Please read README.md under JSOptions folder!", ex);
+                throw new Exception("Unable to find JSOptions/SanitizerOptions.json as a default configuration. Please read JS-README.md under JSOptions folder!", ex);
             }
         }
 
-        public class JOptions
-        {
-            public JOptions ()
-            {
-                this.Sensitivity = new List<string>();
-            }
+        //public class JOptions
+        //{
+        //    public JOptions ()
+        //    {
+        //        this.Sensitivity = new List<string>();
+        //    }
 
-            public string DefaultMaskValue { set; get; } = "###-###";
-            public List<string> Sensitivity { set; get; }
-        }
+        //    public string DefaultMaskValue { set; get; } = "###-###";
+        //    public List<string> Sensitivity { set; get; }
+        //}
 
-        public static string SanitizeXmlValue(this string target, JOptions options)
+        public static string SanitizeXmlValue(this string target, XmlMask ml)
         {
 
             if (string.IsNullOrEmpty(target))
@@ -62,23 +145,26 @@ namespace JSanitizer
 
             targetXMLDoc.LoadXml(target);
 
-            if (options.Sensitivity.Count == 0)
+            foreach (var item in ml.Sensitivity)
             {
-                options.Sensitivity = new List<string>()
+                if (item.TargetProperties.Count == 0)
                 {
-                    "password"
-                };
+                    item.TargetProperties.Add("password");
+                }
             }
 
-            foreach (string sensitiveItem in options.Sensitivity)
+            ml.Sensitivity.ForEach(sensitiveValues =>
             {
                 XmlNodeList nodes = targetXMLDoc.DocumentElement.ChildNodes;
 
-                foreach (XmlNode node in nodes)
+                sensitiveValues.TargetProperties.ForEach(sensitivityItem =>
                 {
-                    XmlValueReplacer(node, sensitiveItem, options.DefaultMaskValue);
-                }
-            }
+                    foreach (XmlNode node in nodes)
+                    {
+                        XmlValueReplacer(node, sensitivityItem, ml.MaskValue , ml , sensitiveValues.Positions);
+                    }
+                });
+            });
 
             return targetXMLDoc.InnerXml;
         }
@@ -104,10 +190,13 @@ namespace JSanitizer
                 {
                     XmlNodeList nodes = targetXMLDoc.DocumentElement.ChildNodes;
 
-                    foreach (XmlNode node in nodes)
+                    sensitiveItem.TargetProperties.ForEach(sensitivityItem =>
                     {
-                        XmlValueReplacer(node, sensitiveItem, extLog.XmlMask.MaskValue);
-                    }
+                        foreach (XmlNode node in nodes)
+                        {
+                            XmlValueReplacer(node, sensitivityItem, extLog.XmlMask.MaskValue  , extLog.XmlMask, sensitiveItem.Positions);
+                        }
+                    });
                 });
             });
 
@@ -115,7 +204,7 @@ namespace JSanitizer
         }
 
 
-        public static string SanitizeJsonValue(this string target, JOptions options)
+        public static string SanitizeJsonValue(this string target, JsonMask jm)
         {
 
             if (string.IsNullOrEmpty(target)) return null;
@@ -123,18 +212,23 @@ namespace JSanitizer
             if (!target.IsValidJson())
                 return target;
 
-            if(options.Sensitivity.Count == 0)
+
+            foreach (var item in jm.Sensitivity)
             {
-                options.Sensitivity = new List<string>()
+                if(item.TargetProperties.Count == 0)
                 {
-                    "password"
-                };
+                    item.TargetProperties.Add("password");
+                }
             }
 
-            foreach (string sensitiveValue in options.Sensitivity)
+
+            jm.Sensitivity.ForEach(sensitiveValues =>
             {
-                target = JsonAction(target, sensitiveValue, options.DefaultMaskValue);
-            }
+                sensitiveValues.TargetProperties.ForEach(sensitivityItem =>
+                {
+                    target = JsonAction(target, sensitivityItem, jm, sensitiveValues.Positions);
+                });
+            });
 
             return target;
         }
@@ -150,9 +244,14 @@ namespace JSanitizer
 
             logConfig.ConfigurationValue.ForEach(extLog =>
             {
-                extLog.JsonMask.Sensitivity.ForEach(sensitiveValue =>
+                extLog.JsonMask.Sensitivity.ForEach(sensitiveValues =>
                 {
-                    target = JsonAction(target, sensitiveValue, extLog.JsonMask.MaskValue);
+                    sensitiveValues.TargetProperties.ForEach(sensitivityItem =>
+                    {
+                        target = JsonAction(target, sensitivityItem, 
+                                            extLog.JsonMask, 
+                                            sensitiveValues.Positions);
+                    });
                 });
 
             });
@@ -160,9 +259,11 @@ namespace JSanitizer
             return target;
         }
 
-        private static string JsonAction(string propVal, string senItem, string maskValue)
+        private static string JsonAction(string propVal, string senItem, JsonMask jm , MaskPosition ps)
         {
             JToken node = JToken.Parse(propVal);
+
+            bool isMasked = false;
 
             CheckJsonNode(node, n =>
             {
@@ -170,7 +271,88 @@ namespace JSanitizer
 
                 if (token != null && token.Type == JTokenType.String)
                 {
-                    propVal = propVal.Replace(token.ToString(), maskValue);
+                    string input = token.ToString();
+
+                    string copyInput = token.ToString();
+
+                    int length = input.Length - ps.Left;
+
+                    if (!jm.IsFullMasking && jm.IsFullMasking && ps.Left > 0 && length > ps.Left)
+                    {
+                        string masking = string.Empty;
+
+                        for (int i = 0; i < ps.Left; i++) masking += jm.MaskValue;
+
+                        char[] chars = input.ToCharArray();
+
+                        string toBeReplaced = string.Empty ;
+
+                        for (int i = length; i < input.Length; i++)
+                        {
+                            toBeReplaced += chars[i].ToString();
+                        }
+
+                        input = input.Replace(toBeReplaced, masking);
+                         
+                        isMasked = true;
+                    }
+
+                    if  (!jm.IsFullMasking && ps.Right > 0 && length > ps.Right)
+                    {
+                        string masking = string.Empty;
+
+                        for (int i = 0; i < ps.Right; i++) masking += jm.MaskValue;
+
+                        char[] chars = input.ToCharArray();
+
+                        string toBeReplaced = string.Empty;
+
+                        for (int i = 0; i < ps.Right; i++)
+                        {
+                            toBeReplaced += input[i].ToString();
+                        }
+
+                        input = input.Replace(toBeReplaced, masking);
+
+                        isMasked = true;
+                    }
+
+                    if (!jm.IsFullMasking && ps.Center > 0 && length > ps.Center)
+                    {
+                        string masking = string.Empty;
+
+                        int nl = length / 2;
+
+                        for (int i = 0; i < ps.Center; i++) masking += jm.MaskValue;
+
+                        char[] chars = input.ToCharArray();
+
+                        string toBeReplaced = string.Empty;
+
+                        int c = 0;
+
+                        for (int i = nl; i < length; i++)
+                        {
+                            if(c < ps.Center)
+                            {
+                                toBeReplaced += input[i].ToString();
+                                c++;
+                            }
+                        }
+
+                        input = input.Replace(toBeReplaced, masking);
+
+                        isMasked = true;
+                    }
+
+                    if (isMasked)
+                    {
+                        propVal = propVal.Replace(copyInput, input);
+                    }
+                    else
+                    {
+                        propVal = propVal.Replace(token.ToString(), jm.MaskValue);
+                    }
                 }
             });
 
@@ -268,7 +450,6 @@ namespace JSanitizer
         }
 
         public int Id { set; get; }
-        public string ServiceName { set; get; }
 
         public XmlMask XmlMask { set; get; }
 
@@ -279,21 +460,34 @@ namespace JSanitizer
     {
         public XmlMask()
         {
-            this.Sensitivity = new List<string>();
+            this.Sensitivity = new List<Sensitivity>();
         }
-
+        public bool IsFullMasking { set; get; }
         public string MaskValue { set; get; }
-        public List<string> Sensitivity { set; get; }
+        public List<Sensitivity> Sensitivity { set; get; }
+    }
+
+    public class MaskPosition
+    {
+        public int Left { set; get; }
+        public int Center { set; get; }
+        public int Right { set; get; }
     }
 
     public class JsonMask
     {
         public JsonMask()
         {
-            this.Sensitivity = new List<string>();
+            this.Sensitivity = new List<Sensitivity>();
         }
-
+        public bool IsFullMasking { set; get; }
         public string MaskValue { set; get; }
-        public List<string> Sensitivity { set; get; }
+        public List<Sensitivity> Sensitivity { set; get; }
+    }
+
+    public class Sensitivity
+    {
+        public List<string> TargetProperties { set; get; }
+        public MaskPosition Positions { set; get; }
     }
 }

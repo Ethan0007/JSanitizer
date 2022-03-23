@@ -33,7 +33,6 @@ namespace JSanitizer.Tests.Controllers
         [HttpGet, Route("GetWithoutOptions")]
         public IActionResult Get()
         {
-          
             Data data = new Data()
             {
                 JsonArrayResult = "[{\"password\":\"password@412\", \"data\": \"sample\" }]".SanitizeJsonValue(),
@@ -49,11 +48,28 @@ namespace JSanitizer.Tests.Controllers
         {
             Data data = new Data()
             {
-                XMLResult = _xmlValue.SanitizeXmlValue(new Sanitizer.JOptions()
+                XMLResult = _xmlValue.SanitizeXmlValue(new XmlMask()
                 {
-                    DefaultMaskValue = "####-####",
-                    Sensitivity = new List<string>() { "password" }
-                }),
+                    MaskValue = "#",
+                    IsFullMasking = false,
+                    Sensitivity = new List<Sensitivity>()
+                    {
+                      new Sensitivity()
+                      {
+                          TargetProperties = new List<string> {
+                             "Password",
+                             "password",
+                             "PASSWROD"
+                          },
+                          Positions = new MaskPosition ()
+                          {
+                              Left = 3,
+                              Center = 2,
+                              Right = 2
+                          }
+                    }
+                }
+                })
             };
 
             return Ok(data);

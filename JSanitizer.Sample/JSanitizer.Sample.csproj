@@ -11,12 +11,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JSanitizer" Version="2.0.1" />
+    <ProjectReference Include="..\JSanitizer\JSanitizer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="C:\Users\Joever Monceda\.nuget\packages\jsanitizer\1.0.4\contentFiles\any\netcoreapp3.1\JSOptions\SanitizerOptions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="JSOptions\SanitizerOptions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
