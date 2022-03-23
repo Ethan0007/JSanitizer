@@ -11,6 +11,8 @@ namespace JSanitizer
 {
     public static class Sanitizer
     {
+        private static string _configPathErrorMsg => "Unable to find JSOptions/SanitizerOptions.json as a default configuration. Please read JS-README.md under JSOptions folder!";
+
         private static void XmlValueReplacer(XmlNode node, string sensitivity, string maskVal, XmlMask xm, MaskPosition ps)
         {
             foreach (XmlNode child in node.ChildNodes)
@@ -105,32 +107,19 @@ namespace JSanitizer
             }
         }
 
-        private static LogConfig GetConfig()
+        private static LogConfig GetConfig(string configPath)
         {
             try
-            {
-                string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "JSOptions/SanitizerOptions.json");
-
-                string jsonValue = File.ReadAllText(filePath);
+            { 
+                string jsonValue = File.ReadAllText(configPath);
 
                 return JsonConvert.DeserializeObject<LogConfig>(jsonValue);
             }
             catch (Exception ex)
             {
-                throw new Exception("Unable to find JSOptions/SanitizerOptions.json as a default configuration. Please read JS-README.md under JSOptions folder!", ex);
+                throw new Exception(_configPathErrorMsg, ex);
             }
         }
-
-        //public class JOptions
-        //{
-        //    public JOptions ()
-        //    {
-        //        this.Sensitivity = new List<string>();
-        //    }
-
-        //    public string DefaultMaskValue { set; get; } = "###-###";
-        //    public List<string> Sensitivity { set; get; }
-        //}
 
         public static string SanitizeXmlValue(this string target, XmlMask ml)
         {
@@ -169,7 +158,7 @@ namespace JSanitizer
             return targetXMLDoc.InnerXml;
         }
 
-        public static string SanitizeXmlValue(this string target)
+        public static string SanitizeXmlValue(this string target, string configPath)
         {
 
             if (string.IsNullOrEmpty(target))
@@ -178,7 +167,9 @@ namespace JSanitizer
             if (!target.IsValidXML())
                 return target;
 
-            LogConfig logConfig = GetConfig();
+            if (string.IsNullOrEmpty(configPath)) throw new Exception(_configPathErrorMsg);
+
+            LogConfig logConfig = GetConfig(configPath);
 
             XmlDocument targetXMLDoc = new XmlDocument();
 
@@ -233,14 +224,17 @@ namespace JSanitizer
             return target;
         }
 
-        public static string SanitizeJsonValue(this string target)
+        public static string SanitizeJsonValue(this string target, string configPath)
         {
-            LogConfig logConfig = GetConfig();
 
             if (string.IsNullOrEmpty(target)) return null;
 
             if (!target.IsValidJson())
                 return target;
+
+            if (string.IsNullOrEmpty(configPath)) throw new Exception(_configPathErrorMsg);
+
+            LogConfig logConfig = GetConfig(configPath);
 
             logConfig.ConfigurationValue.ForEach(extLog =>
             {

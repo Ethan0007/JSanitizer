@@ -7,24 +7,44 @@ Configurable sanitizer for XML and JSON string value through extension method.
 ##### {Project.Name}/JSOptions/SanitizerOptions.json
 ```
 {
-  "DefaultMaskValue": "####-####",
+  "DefaultMaskValue": "#",
   "ConfigurationValue": [
     {
       "id": 1,
       "XmlMask": {
-        "MaskValue": "###-###-###",
+        "MaskValue": "#",
+        "IsFullMasking": false,
         "Sensitivity": [
-          "Password",
-          "password",
-          "PASSWROD"
+          {
+            "TargetProperties": [
+              "Password",
+              "password",
+              "PASSWROD"
+            ],
+            "Positions": {
+              "Left": 1,
+              "Center": 1,
+              "Right": 1
+            }
+          }
         ]
       },
       "JsonMask": {
-        "MaskValue": "###-###-###",
+        "MaskValue": "#",
+        "IsFullMasking": false,
         "Sensitivity": [
-          "Password",
-          "password",
-          "PASSWROD"
+          {
+            "TargetProperties": [
+              "Password",
+              "password",
+              "PASSWROD"
+            ],
+            "Positions": {
+              "Left": 3,
+              "Center": 3,
+              "Right": 3
+            }
+          }
         ]
       }
     }

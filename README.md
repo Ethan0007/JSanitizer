@@ -95,7 +95,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
 
 2. Sanitize withoptions 
 ```
-   [HttpGet, Route("GetWithOptions")]
+    [HttpGet, Route("GetWithOptions")]
     public IActionResult GetWithOptions()
     {
         Data data = new Data()

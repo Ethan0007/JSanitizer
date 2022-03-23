@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Company></Company>
-    <Version>2.0.2</Version>
-    <AssemblyVersion>2.0.2.0</AssemblyVersion>
+    <Version>3.0.0</Version>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <Product>JoeverMonceda</Product>
     <Description>C# Json and XML string value masking/sanitizer</Description>
     <Copyright>Copyright (c) 2020 by Joever Monceda</Copyright>
@@ -17,7 +17,7 @@
     <PackageIcon>js.png</PackageIcon>
     <RepositoryUrl>https://github.com/Ethan0007/JSanitizer</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-    <PackageReleaseNotes>Update configurations</PackageReleaseNotes>
+    <PackageReleaseNotes>Add Configuration Path / Update configurations / Update Sensitivity / Add Positions </PackageReleaseNotes>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>

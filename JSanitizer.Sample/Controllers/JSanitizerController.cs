@@ -12,11 +12,7 @@ namespace JSanitizer.Tests.Controllers
     [Route("[controller]")]
     public class JSanitizerController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+    
         private readonly ILogger<JSanitizerController> _logger;
 
         private string _xmlValue { set; get; }
@@ -33,11 +29,13 @@ namespace JSanitizer.Tests.Controllers
         [HttpGet, Route("GetWithoutOptions")]
         public IActionResult Get()
         {
+            string configDir = $"{Directory.GetCurrentDirectory()}\\JSOptions\\SanitizerOptions.json";
+
             Data data = new Data()
             {
-                JsonArrayResult = "[{\"password\":\"password@412\", \"data\": \"sample\" }]".SanitizeJsonValue(),
-                Name = "{\"name\":\"John\", \"age\":30, \"password\":\"password@123\" }".SanitizeJsonValue(),
-                XMLResult = _xmlValue.SanitizeXmlValue()
+                JsonArrayResult = "[{\"password\":\"password@412\", \"data\": \"sample\" }]".SanitizeJsonValue(configDir),
+                Name = "{\"name\":\"John\", \"age\":30, \"password\":\"password@123\" }".SanitizeJsonValue(configDir),
+                XMLResult = _xmlValue.SanitizeXmlValue(configDir)
             };
 
             return Ok(data);
