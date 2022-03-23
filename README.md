@@ -16,8 +16,8 @@ Configurable sanitizer for XML and JSON string value through extension method.
 ```Install-Package JSanitizer -Version 2.0.1```   
 
 **Extension:**   
-```.SanitizeJsonValue()```   
-```.SanitizeXmlValue()```   
+```.SanitizeJsonValue(configPath)```   
+```.SanitizeXmlValue(configPath)```   
 ```.SanitizeJsonValue(options)```   
 ```.SanitizeXmlValue(options)```
 
@@ -27,24 +27,44 @@ Configurable sanitizer for XML and JSON string value through extension method.
 ##### {Project.Name}/JSOptions/SanitizerOptions.json
 ```
 {
-  "DefaultMaskValue": "####-####",
+  "DefaultMaskValue": "#",
   "ConfigurationValue": [
     {
       "id": 1,
       "XmlMask": {
-        "MaskValue": "###-###-###",
+        "MaskValue": "#",
+        "IsFullMasking": false,
         "Sensitivity": [
-          "Password",
-          "password",
-          "PASSWROD"
+          {
+            "TargetProperties": [
+              "Password",
+              "password",
+              "PASSWROD"
+            ],
+            "Positions": {
+              "Left": 1,
+              "Center": 1,
+              "Right": 1
+            }
+          }
         ]
       },
       "JsonMask": {
-        "MaskValue": "###-###-###",
+        "MaskValue": "#",
+        "IsFullMasking": false,
         "Sensitivity": [
-          "Password",
-          "password",
-          "PASSWROD"
+          {
+            "TargetProperties": [
+              "Password",
+              "password",
+              "PASSWROD"
+            ],
+            "Positions": {
+              "Left": 3,
+              "Center": 3,
+              "Right": 3
+            }
+          }
         ]
       }
     }
@@ -57,31 +77,51 @@ Configurable sanitizer for XML and JSON string value through extension method.
 
 1. Sanitize without options 
 ```
-   [HttpGet, Route("GetWithoutOptions")]
-   public IActionResult Get()
-   {
-       Data data = new Data()
-       {
-        JsonArrayResult = "[{\"password\":\"password@412\", \"data\": \"sample\" }]".SanitizeJsonValue(),
-        Name = "{\"name\":\"John\", \"age\":30, \"password\":\"password@123\"}".SanitizeJsonValue(),
-        XMLResult = _xmlValue.SanitizeXmlValue()
-       };
+    [HttpGet, Route("GetWithoutOptions")]
+    public IActionResult Get()
+    {
+        string configDir = $"{Directory.GetCurrentDirectory()}\\JSOptions\\SanitizerOptions.json";
+
+        Data data = new Data()
+        {
+            JsonArrayResult = "[{\"password\":\"password@412\", \"data\": \"sample\" }]".SanitizeJsonValue(configDir),
+            Name = "{\"name\":\"John\", \"age\":30, \"password\":\"password@123\" }".SanitizeJsonValue(configDir),
+            XMLResult = _xmlValue.SanitizeXmlValue(configDir)
+        };
 
         return Ok(data);
-     }
+    }
 ```
 
 2. Sanitize withoptions 
 ```
    [HttpGet, Route("GetWithOptions")]
-   public IActionResult GetWithOptions()
-   {
-      Data data = new Data()
-       {
-        XMLResult = _xmlValue.SanitizeXmlValue(new Sanitizer.JOptions()
+    public IActionResult GetWithOptions()
+    {
+        Data data = new Data()
         {
-         DefaultMaskValue = "####-####",
-         Sensitivity = new List<string>() { "password" }}),
+            XMLResult = _xmlValue.SanitizeXmlValue(new XmlMask()
+            {
+                MaskValue = "#",
+                IsFullMasking = false,
+                Sensitivity = new List<Sensitivity>()
+                {
+                  new Sensitivity()
+                  {
+                      TargetProperties = new List<string> {
+                         "Password",
+                         "password",
+                         "PASSWROD"
+                      },
+                      Positions = new MaskPosition ()
+                      {
+                          Left = 3,
+                          Center = 2,
+                          Right = 2
+                      }
+                }
+            }
+            })
         };
 
         return Ok(data);
