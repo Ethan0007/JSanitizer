@@ -39,7 +39,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
             "TargetProperties": [
               "Password",
               "password",
-              "PASSWROD"
+              "PASSWORD"
             ],
             "Positions": {
               "Left": 1,
@@ -57,7 +57,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
             "TargetProperties": [
               "Password",
               "password",
-              "PASSWROD"
+              "PASSWORD"
             ],
             "Positions": {
               "Left": 3,
