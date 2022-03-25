@@ -11,7 +11,7 @@
             "TargetProperties": [
               "Password",
               "password",
-              "PASSWROD"
+              "PASSWORD"
             ],
             "Positions": {
               "Left": 1,
@@ -29,7 +29,7 @@
             "TargetProperties": [
               "Password",
               "password",
-              "PASSWROD"
+              "PASSWORD"
             ],
             "Positions": {
               "Left": 3,

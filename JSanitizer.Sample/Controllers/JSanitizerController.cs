@@ -26,7 +26,7 @@ namespace JSanitizer.Tests.Controllers
             _xmlValue = System.IO.File.ReadAllText(path);
         }
 
-        [HttpGet, Route("GetWithoutOptions")]
+        [HttpGet, Route("GetWithJsonConfiguration")]
         public IActionResult Get()
         {
             string configDir = $"{Directory.GetCurrentDirectory()}\\JSOptions\\SanitizerOptions.json";
@@ -41,7 +41,7 @@ namespace JSanitizer.Tests.Controllers
             return Ok(data);
         }
 
-        [HttpGet, Route("GetWithOptions")]
+        [HttpGet, Route("GetWithClassConfigurations")]
         public IActionResult GetWithOptions()
         {
             Data data = new Data()

@@ -271,7 +271,7 @@ namespace JSanitizer
 
                     int length = input.Length - ps.Left;
 
-                    if (!jm.IsFullMasking && jm.IsFullMasking && ps.Left > 0 && length > ps.Left)
+                    if (!jm.IsFullMasking && ps.Left > 0 && length > ps.Left)
                     {
                         string masking = string.Empty;
 
