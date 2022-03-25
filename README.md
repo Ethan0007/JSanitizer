@@ -13,7 +13,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
  
 # How to use:  
 * Go to Tools and select Manage Nuget Packages and Search for JSanitizer library   
-```Install-Package JSanitizer -Version 2.0.1```   
+```Install-Package JSanitizer -Version 3.0.0```   
 
 **Extension:**   
 ```.SanitizeJsonValue(configPath)```   
@@ -77,7 +77,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
 
 1. Sanitize without options 
 ```
-    [HttpGet, Route("GetWithoutOptions")]
+    [HttpGet, Route("GetWithJsonConfiguration")]
     public IActionResult Get()
     {
         string configDir = $"{Directory.GetCurrentDirectory()}\\JSOptions\\SanitizerOptions.json";
@@ -95,7 +95,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
 
 2. Sanitize withoptions 
 ```
-    [HttpGet, Route("GetWithOptions")]
+    [HttpGet, Route("GetWithClassConfigurations")]
     public IActionResult GetWithOptions()
     {
         Data data = new Data()
