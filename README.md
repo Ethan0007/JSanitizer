@@ -132,9 +132,11 @@ Configurable sanitizer for XML and JSON through extension method.
 ```
 
 ## Please make a donate if you like it. :blush:   
+**KBANK QR Code:**   
+
 ![KBANK](https://i.imgur.com/jYtO74p.jpg)
 
-# Want to Contribute?  
+## Want to Contribute?  
 Ever tired of getting bugs yet too difficult to solve? Worry no more, create an issue (just make sure it isn’t an existing one) and i will do my best to fix it. Great ideas are welcome too; just make an issue with the Proposal or a PR from your Fork.
 
 ## Changelog
