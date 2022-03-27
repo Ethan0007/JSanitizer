@@ -11,7 +11,7 @@ namespace JSanitizer
 {
     public static class Sanitizer
     {
-        private static string _configPathErrorMsg => "Unable to find JSOptions/SanitizerOptions.json as a default configuration. Please read JS-README.md under JSOptions folder!";
+        private static string _configPathErrorMsg => "Unable to find json configuration. Please read JS-README.md!";
 
         private static void XmlValueReplacer(XmlNode node, string sensitivity, string maskVal, XmlMask xm, MaskPosition ps)
         {

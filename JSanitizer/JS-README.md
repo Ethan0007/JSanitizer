@@ -2,9 +2,9 @@
 Configurable sanitizer for XML and JSON string value through extension method.
 
 ## How to create your custom JSON configurations.
-* Create folder with name **JSOptions** under your project then create json file with name **SanitizerOptions.json** under the said folder as your default configuration and follow the object format below.
+* Create JSON configuration file under your project and follow the object schema below.
 
-##### {Project.Name}/JSOptions/SanitizerOptions.json
+##### {Project.Name}/SanitizerOptions.json
 ```
 {
   "DefaultMaskValue": "#",
@@ -19,7 +19,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
             "TargetProperties": [
               "Password",
               "password",
-              "PASSWROD"
+              "PASSWORD"
             ],
             "Positions": {
               "Left": 1,
@@ -37,7 +37,7 @@ Configurable sanitizer for XML and JSON string value through extension method.
             "TargetProperties": [
               "Password",
               "password",
-              "PASSWROD"
+              "PASSWORD"
             ],
             "Positions": {
               "Left": 3,
