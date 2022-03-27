@@ -1,5 +1,8 @@
+[![NuGet Downloads](https://img.shields.io/nuget/dt/JSanitizer.svg)](https://github.com/Ethan0007/JSanitizer)
+[![NuGet Version](https://img.shields.io/nuget/v/JSanitizer.svg)](https://github.com/Ethan0007/JSanitizer)
+
 # JSanitizer 
-Configurable sanitizer for XML and JSON through extension method.
+Configurable sanitizer for XML and JSON through extension method.   
 
 # Features  
 * Default sanitizer to replace password value
