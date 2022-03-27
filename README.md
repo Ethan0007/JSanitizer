@@ -1,5 +1,5 @@
 # JSanitizer 
-Configurable sanitizer for XML and JSON string value through extension method.
+Configurable sanitizer for XML and JSON through extension method.
 
 # Features  
 * Default sanitizer to replace password value
