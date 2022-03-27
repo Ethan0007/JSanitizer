@@ -16,7 +16,7 @@ Configurable sanitizer for XML and JSON through extension method.
  
 # How to use:  
 * Go to Tools and select Manage Nuget Packages and Search for JSanitizer library   
-```Install-Package JSanitizer -Version 3.0.0```   
+```Install-Package JSanitizer -Version 3.0.1```   
 
 **Extension:**   
 ```.SanitizeJsonValue(configPath)```   
